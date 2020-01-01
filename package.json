@@ -1,0 +1,15 @@
+{
+  "name": "fisherbot_v2",
+  "version": "2.0.0",
+  "description": "Fisherbot, upgraded",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Itai Fish",
+  "license": "MIT"
+}
