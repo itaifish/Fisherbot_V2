@@ -23,8 +23,8 @@ class Bot {
 			return;
 		}
 
-		const args = messageObject.content.slice(this.prefix.length).split(this.delimiter + '+');
-		const commandName = args.shift().toLowerCase();
+		const args = messageObject.content.slice(this.prefix.length).split(new RegExp(`${this.delimiter}+`));
+		const commandName = args.shift().toLowerCase().trimEnd();
 
 		if(!this.commands.has(commandName)){
 			return;
@@ -41,7 +41,7 @@ class Bot {
 		Logger.logMessage('DEBUG', messageLogString);
 	}
 
-	sendOutput(channel, messageString, isCode=false, title='') {
+	sendOutput(channel, messageString, isCode=false, title='', footer=`Use ${this.prefix}help to get help`) {
 		let sendFunction;
 		if(!isCode){ 
 			sendFunction = () => channel.send(messageString);
@@ -50,7 +50,7 @@ class Bot {
 			.setTitle(title)
 			.setDescription(messageString)
 			.setColor(16763981)
-			.setFooter(`Use ${this.prefix}help to get help`);
+			.setFooter(footer);
 			sendFunction = () => channel.send(embed);
 		} 
 		sendFunction(messageString).then((messageSent) => {
