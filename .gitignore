@@ -10,6 +10,7 @@ logs/
 # Authentication
 test/auth.json
 test/auth.js
+docs/deploy/config.json
 docs/deploy/deploy_key
 docs/deploy/deploy_key.pub
 deploy/deploy_key
