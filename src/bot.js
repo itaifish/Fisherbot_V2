@@ -37,14 +37,24 @@ class Bot {
             this.sendOutput(messageObject.channel, "I had trouble executing that command. Please refer to your admin for more information.");
         }
 
-        const messageLogString = messageObject.author.username + '[' + parseInt(messageObject.author.id, 10).toString(36) + '] : ' + messageObject.content;
+        const messageLogString = `${messageObject.author.username}[${parseInt(messageObject.author.id, 10).toString(36)}] (${messageObject.embeds.length} embeded data): ${messageObject.cleanContent}`;
         Logger.logMessage('DEBUG', messageLogString);
     }
 
-    sendOutput(channel, messageString, isCode=false) {
-        const sendFunction = isCode ? () => channel.send(messageString) : () => channel.sendCode(messageString);
+    sendOutput(channel, messageString, isCode=false, title='') {
+        let sendFunction;
+        if(!isCode){ 
+            sendFunction = () => channel.send(messageString);
+        } else {
+            const embed = new Discord.RichEmbed()
+            .setTitle(title)
+            .setDescription(messageString)
+            .setColor(16763981)
+            .setFooter(`Use ${this.prefix}help to get help`);
+            sendFunction = () => channel.send(embed);
+        } 
         sendFunction(messageString).then((messageSent) => {
-            const messageLogString = messageSent.author.username + '[' + parseInt(messageSent.author.id, 10).toString(36) + '] : ' + messageSent.content;
+            const messageLogString = `${messageSent.author.username}[${parseInt(messageSent.author.id, 10).toString(36)}] (${messageSent.embeds.length} embeded data): ${messageSent.cleanContent}`;
             Logger.logMessage('DEBUG', messageLogString);
         }).catch((err) => {
             Logger.logMessage('ERROR', err);
