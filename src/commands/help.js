@@ -6,6 +6,8 @@ module.exports = {
             get name(){ return 'help'},
             description: "Explains what the bot can do, and can describe any function that is called as an argument",
             get example(){ return  `${config.prefix}${this.name}\n\t${config.prefix}${this.name}${config.delimiter}${this.name}`},
+            guildOnly: false,
+            cooldown: config.defaultCooldown,
             method: (message, args, bot) => {
                 if(args.length == 0) {
                     const commands = Array.from(bot.commands.keys()).sort();
