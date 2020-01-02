@@ -18,6 +18,10 @@ client.on('message', message => {
 	}
 });
 
+//possible additional exit inputs
+// [`exit`, `SIGINT`, `SIGUSR1`, `SIGUSR2`, `uncaughtException`, `SIGTERM`].forEach((eventType) => {
+//  process.on(eventType, cleanUpServer.bind(null, eventType));
+// })
 process.on('SIGINT', () => {
 	Logger.closeLogStream();
 	process.exit();

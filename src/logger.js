@@ -6,13 +6,14 @@ const logFileName = 'log' + new Date().getTime() + '.log'
 class Logger {
 
     static logMessage(logLevel, message) {
+        //onetime init for logstream
         if(typeof Logger.logStream === 'undefined') {
             if(!fs.existsSync(logPath)) {
                 fs.mkdirSync(logPath, {recursive: true});
             }
             Logger.logStream = fs.createWriteStream(logPath + logFileName, {flag: 'a'});
             //remove extra/unneeded log files
-            Logger.logStream.on('open', () => {
+            Logger.logStream.on('open', () => { //Wait until the file is actually opened to count how many files are in directory to avoid race conditions
                 fs.readdir(logPath, (err, files) => {
                     let dataFiles = files.map((file) => {
                         const stat = fs.statSync(logPath + file);
@@ -66,7 +67,7 @@ class Logger {
     static closeLogStream() {
         if (typeof Logger.logStream != 'undefined') {
             this.logMessage('INFO', 'Exiting... Ending Write Stream to Log');
-            Logger.logStream.end('--------------');
+            Logger.logStream.end();
         }
     }
 
