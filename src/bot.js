@@ -30,7 +30,7 @@ class Bot {
 			return;
 		}
 		const command = this.commands.get(commandName);
-		if (command.guildOnly && message.channel.type !== 'text') {
+		if (command.guildOnly && messageObject.channel.type !== 'text') {
 			return this.sendOutput(messageObject.channel, 'I can\'t execute that command inside DMs');
 		}
 		if((command.isAdmin || false)) {

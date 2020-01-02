@@ -13,23 +13,32 @@ module.exports = {
             method: (message, args, bot) => {
                 if(args.length === 0) {
                     return bot.sendOutput(message.channel,
-                         `This command requires another argument for which command to reload. See ${config.prefix}help${config.delimiter}${this.name} for details.`);
+                         `This command requires another argument for which command to reload. See ${config.prefix}help${config.delimiter}${this.name} for details. `);
                 }
                 const commandName = args[0].toLowerCase().trim();
                 const command = bot.commands.get(commandName);
                 if(!command) {
                     return bot.sendOutput(message.channel, `Unable to find command '${commandName}'.`);
                 } else {
-                    delete require.cache[require.resolve(`./${commandName}.js`)];
+                    let resolveName = commandName;
+                    if(command.fileAlias) {
+                        resolveName = command.fileAlias;
+                    }
+                    delete require.cache[require.resolve(`./${resolveName}.js`)];
+                    let success = true;
                     try {
-                        const refreshedCommands = require(`./${commandName}.js`);
+                        const refreshedCommands = require(`./${resolveName}.js`);
                         for(const refreshedCommand of refreshedCommands.commands) {
                             bot.commands.set(commandName, refreshedCommand);
-                            bot.sendOutput(message.channel, `Reload of ${commandName} successful`);
                         }
                     } catch (err) {
                         Logger.logMessage('WARN', err);
+                        success = false;
                         bot.sendOutput(message.channel, `Reload of ${commandName} failed, check the logs for details.`);
+                    }
+                    if(success) {
+                        bot.sendOutput(message.channel, `Reload of ${commandName} successful`);
+
                     }
                 } 
             }
