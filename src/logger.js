@@ -21,7 +21,9 @@ class Logger {
                             name: file,
                             time: stat.birthtimeMs
                         };
-                    })
+                    });
+
+                    dataFiles.filter(dataFile => dataFile.name.endsWith('.log'));
                     
                     dataFiles.sort((file1, file2) => {
                         return file2.time - file1.time;
@@ -39,8 +41,9 @@ class Logger {
             });
         }
         if(this.rankLogLevel(logLevel) >= this.rankLogLevel(config.logLevel)) {
-            const logString = "| [" + new Date() + "] " + logLevel.toUpperCase() + " |: " + message + "\n";
-            Logger.logStream.write(logString);
+            const logString = "| [" + new Date() + "] " + logLevel.toUpperCase() + " |: " + message;
+            Logger.logStream.write(logString + "\n");
+            console.log(logString);
         }
     }
 
