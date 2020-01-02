@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const Logger = require('./logger');
 const fs = require('fs');
+const config = require('../docs/deploy/config.json');
 
 class Bot {
 
@@ -9,6 +10,7 @@ class Bot {
 		this.prefix = prefix;
 		this.delimiter = delimiter;
 		this.commands = new Discord.Collection();
+		this.cooldowns = new Discord.Collection();
 		const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 		for(const file of commandFiles) {
 			const command = require(`./commands/${file}`);
@@ -22,14 +24,37 @@ class Bot {
 		if (!messageObject.content.startsWith(this.prefix) || messageObject.author.bot) {
 			return;
 		}
-
-		const args = messageObject.content.slice(this.prefix.length).split(this.delimiter + '+');
-		const commandName = args.shift().toLowerCase();
-
+		const args = messageObject.content.slice(this.prefix.length).split(new RegExp(`${this.delimiter}+`));
+		const commandName = args.shift().toLowerCase().trimEnd();
 		if(!this.commands.has(commandName)){
 			return;
 		}
-
+		const command = this.commands.get(commandName);
+		if (command.guildOnly && messageObject.channel.type !== 'text') {
+			return this.sendOutput(messageObject.channel, 'I can\'t execute that command inside DMs');
+		}
+		if((command.isAdmin || false)) {
+			if(!messageObject.member.hasPermission('ADMINISTRATOR')) {
+				return this.sendOutput(messageObject.channel, `ERR: ${commandName} requires admin permissions.`);
+			}
+		}
+		//Deal with cooldowns for spam
+		if(!this.cooldowns.has(commandName)) {
+			this.cooldowns.set(commandName, new Discord.Collection());
+		}
+		const now = Date.now();
+		const timestamps = this.cooldowns.get(commandName);
+		const cooldownAmnt = (command.cooldown || config.defaultCooldown) * 1000;
+		if(cooldownAmnt != 0 && timestamps.has(messageObject.author.id)) {
+			const expirationTime = timestamps.get(messageObject.author.id) + cooldownAmnt;
+			if(now < expirationTime) {
+				const timeRemaining = (expirationTime - now)/1000;
+				return this.sendOutput(messageObject.channel, `Spammer detected! Please wait ${timeRemaining.toFixed(1)} second(s) to use ${commandName} again.`);
+			}
+			timestamps.set(message.author.id, now);
+			setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+		}
+		//Run command Method
 		try {
 			this.commands.get(commandName).method(messageObject, args, this);
 		} catch (err) {
@@ -41,7 +66,7 @@ class Bot {
 		Logger.logMessage('DEBUG', messageLogString);
 	}
 
-	sendOutput(channel, messageString, isCode=false, title='') {
+	sendOutput(channel, messageString, isCode=false, title='', footer=`Use ${this.prefix}help to get help`) {
 		let sendFunction;
 		if(!isCode){ 
 			sendFunction = () => channel.send(messageString);
@@ -50,7 +75,7 @@ class Bot {
 			.setTitle(title)
 			.setDescription(messageString)
 			.setColor(16763981)
-			.setFooter(`Use ${this.prefix}help to get help`);
+			.setFooter(footer);
 			sendFunction = () => channel.send(embed);
 		} 
 		sendFunction(messageString).then((messageSent) => {
