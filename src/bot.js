@@ -25,7 +25,7 @@ class Bot {
 			return;
 		}
 		const args = messageObject.content.slice(this.prefix.length).split(new RegExp(`${this.delimiter}+`));
-		const commandName = args.shift().toLowerCase().trimEnd();
+		const commandName = args.shift().toLowerCase().replace(/^\s+/g, '');
 		if(!this.commands.has(commandName)){
 			return;
 		}
