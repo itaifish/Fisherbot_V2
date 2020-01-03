@@ -86,6 +86,15 @@ class Bot {
 		});
 	}
 
+	reply(message, messageString) {
+		message.reply(messageString).then((messageSent)=> {
+			const messageLogString = `${messageSent.author.username}[${parseInt(messageSent.author.id, 10).toString(36)}] (${messageSent.embeds.length} embeded data): ${messageSent.cleanContent}`;
+			Logger.logMessage('DEBUG', messageLogString);
+		}).catch((err) => {
+			Logger.logMessage('ERROR', err);
+		});
+	}
+
 	initMessage() {
 		Logger.logMessage('INFO','Ready, ID: ' + this.id);
 	}
