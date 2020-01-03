@@ -10,7 +10,7 @@ module.exports = {
             get example() { return `${config.prefix}${this.name}${config.delimiter}${this.name}`},
             guildOnly: false,
             cooldown: 0,
-            method: (message, args, bot) => {
+            method: function (message, args, bot) {
                 if(args.length === 0) {
                     return bot.sendOutput(message.channel,
                          `This command requires another argument for which command to reload. See ${config.prefix}help${config.delimiter}${this.name} for details. `);

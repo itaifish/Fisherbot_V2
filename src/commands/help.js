@@ -8,7 +8,7 @@ module.exports = {
             get example(){ return  `${config.prefix}${this.name}\n\t${config.prefix}${this.name}${config.delimiter}${this.name}`},
             guildOnly: false,
             cooldown: config.defaultCooldown,
-            method: (message, args, bot) => {
+            method: function (message, args, bot) {
                 if(args.length == 0) {
                     const commands = Array.from(bot.commands.keys()).sort();
                     let commandsAsString = 'Commands:\n';

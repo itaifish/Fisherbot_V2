@@ -15,7 +15,7 @@ module.exports = {
             get example() { return `${config.prefix}${this.name}${config.delimiter}17\n\t${config.prefix}${this.name}`},
             guildOnly: false,
             cooldown: 0.5,
-            method: (message, args, bot) => {
+            method: function (message, args, bot) {
                 let numSides = 20;
                 let output = '';
                 if(args.length > 0) {
@@ -38,7 +38,7 @@ module.exports = {
             get example() { return `${config.prefix}${this.name}`},
             guildOnly: false,
             cooldown: 0.5,
-            method: (message, args, bot) => {
+            method: function (message, args, bot) {
                 let result = 'Heads';
                 if(Math.random() > 0.5) {
                     result = 'Tails';

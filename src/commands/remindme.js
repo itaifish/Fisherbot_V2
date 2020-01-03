@@ -44,7 +44,7 @@ module.exports = {
             get example() { return `${config.prefix}${this.name}${config.delimiter}5 mins, do the laundry`},
             guildOnly: false,
             cooldown: config.defaultCooldown,
-            method: (message, args, bot) => {
+            method: function (message, args, bot) {
                 if(args.length === 0) {
                     bot.sendOutput(message.channel, `The ${this.name} command requires 2 arguments. Please see ${config.prefix}help${config.delimiter}${this.name} for details`);
                     return;
@@ -59,6 +59,7 @@ module.exports = {
                                     x Hours, Hour, Hrs, Hr, H, hours, hour, hrs, hr, h
                                     x Days, Day, days, day `;
                         bot.sendOutput(message.channel, details, true);
+                        return;
                     } else {
                         bot.sendOutput(message.channel, `The ${this.name} command requires 2 arguments. Please see ${config.prefix}help${config.delimiter}${this.name} for details`);
                         return;
