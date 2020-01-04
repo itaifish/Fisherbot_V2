@@ -51,9 +51,9 @@ class Bot {
 				const timeRemaining = (expirationTime - now)/1000;
 				return this.sendOutput(messageObject.channel, `Spammer detected! Please wait ${timeRemaining.toFixed(1)} second(s) to use ${commandName} again.`);
 			}
-			timestamps.set(message.author.id, now);
-			setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 		}
+		timestamps.set(messageObject.author.id, now);
+		setTimeout(() => timestamps.delete(messageObject.author.id), cooldownAmnt);
 		//Run command Method
 		try {
 			this.commands.get(commandName).method(messageObject, args, this);
