@@ -29,7 +29,7 @@ module.exports = {
                         if(commandData.aliases) {
                             commandExplanation += `\nAliases: ${commandData.aliases}`;
                         }
-                        bot.sendOutput(message.channel, commandExplanation);
+                        bot.sendOutput(message.channel, commandExplanation, true, commandName, '');
                     }else {
                         bot.sendOutput(message.channel, `Unable to recognize command '${commandName}'`);
                     }

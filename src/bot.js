@@ -12,6 +12,7 @@ class Bot {
 		this.commands = new Discord.Collection();
 		this.cooldowns = new Discord.Collection();
 		this.aliases = new Discord.Collection();
+		process.chdir(__dirname);//make sure to be in the right directory when dealing with relative paths
 		const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 		for(const file of commandFiles) {
 			const command = require(`./commands/${file}`);
@@ -80,11 +81,13 @@ class Bot {
 		if(!isCode){ 
 			sendFunction = () => channel.send(messageString);
 		} else {
+			//Capitalize first letter of each word in title
+			title = title.replace(/\b[A-Za-z]/g, (character) => character.toUpperCase());
 			const embed = new Discord.RichEmbed()
-			.setTitle(title)
-			.setDescription(messageString)
-			.setColor(16763981)
-			.setFooter(footer);
+				.setTitle(title)
+				.setDescription(messageString)
+				.setColor(16763981)
+				.setFooter(footer);
 			sendFunction = () => channel.send(embed);
 		} 
 		sendFunction(messageString).then((messageSent) => {
