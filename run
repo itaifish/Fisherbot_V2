@@ -1,0 +1,2 @@
+#!/bin/bash
+pm2 start ./src/index.js --name "Discord.js Node Bot" --watch
