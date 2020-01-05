@@ -6,6 +6,7 @@ const logFileName = 'log' + new Date().getTime() + '.log';
 class Logger {
 
 	static logMessage(logLevel, message) {
+		process.chdir(__dirname);//make sure to be in the right directory when dealing with relative paths
 		//onetime init for logstream
 		if(typeof Logger.logStream === 'undefined') {
 			if(!fs.existsSync(logPath)) {
