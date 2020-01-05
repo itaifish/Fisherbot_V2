@@ -98,6 +98,11 @@ class Bot {
 		});
 	}
 
+	sendImage(channel, imageAttachment) {
+		channel.send('', imageAttachment);
+		Logger.logMessage('DEBUG', `Sending image ${imageAttachment.toString('base64')}`);
+	}
+
 	reply(message, messageString) {
 		message.reply(messageString).then((messageSent)=> {
 			const messageLogString = `${messageSent.author.username}[${parseInt(messageSent.author.id, 10).toString(36)}] (${messageSent.embeds.length} embeded data): ${messageSent.cleanContent}`;
