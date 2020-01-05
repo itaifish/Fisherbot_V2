@@ -15,6 +15,7 @@ module.exports = {
             get example() { return `${config.prefix}${this.name}${config.delimiter}17\n\t${config.prefix}${this.name}`},
             guildOnly: false,
             cooldown: 0.5,
+            aliases: 'random',
             method: function (message, args, bot) {
                 let numSides = 20;
                 let output = '';

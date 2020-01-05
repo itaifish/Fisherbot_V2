@@ -52,7 +52,8 @@ module.exports = {
             fileAlias: 'town',
             description: 'Sets the user to be in town',
             get example() { return `${config.prefix}${this.name}`},
-            guildOnly: true,
+			guildOnly: true,
+			aliases: ['in'],
             method: (message, args, bot) => {
 				replaceMemberRole('Out of Town', 'In Town', message, bot);
             }
@@ -62,7 +63,8 @@ module.exports = {
             fileAlias: 'town',
             description: 'Sets the user to be out of town',
             get example() { return `${config.prefix}${this.name}`},
-            guildOnly: true,
+			guildOnly: true,
+			aliases: ['out'],
             method: (message, args, bot) => {
 				replaceMemberRole('In Town', 'Out of Town', message, bot);
             }

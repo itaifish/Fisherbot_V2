@@ -11,11 +11,17 @@ class Bot {
 		this.delimiter = delimiter;
 		this.commands = new Discord.Collection();
 		this.cooldowns = new Discord.Collection();
+		this.aliases = new Discord.Collection();
 		const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 		for(const file of commandFiles) {
 			const command = require(`./commands/${file}`);
 			for(const commandObj of command.commands) {
 				this.commands.set(commandObj.name, commandObj);
+				if(commandObj.aliases) {
+					for(let alias of commandObj.aliases) {
+						this.aliases.set(alias, commandObj.name);
+					}
+				}
 			}
 		}
 	}
@@ -25,7 +31,10 @@ class Bot {
 			return;
 		}
 		const args = messageObject.content.slice(this.prefix.length).split(new RegExp(`${this.delimiter}+`));
-		const commandName = args.shift().toLowerCase().replace(/^\s+/g, '');
+		let commandName = args.shift().toLowerCase().replace(/^\s+/g, '');
+		if(this.aliases.has(commandName)) {//have alias resolve to real name
+			commandName = this.aliases.get(commandName);
+		}
 		if(!this.commands.has(commandName)){
 			return;
 		}
