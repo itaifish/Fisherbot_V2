@@ -18,6 +18,10 @@ client.on('message', message => {
 	}
 });
 
+client.on('error', error => {
+	Logger.logMessage('ERROR', error);
+});
+
 //possible additional exit inputs
 // [`exit`, `SIGINT`, `SIGUSR1`, `SIGUSR2`, `uncaughtException`, `SIGTERM`].forEach((eventType) => {
 //  process.on(eventType, cleanUpServer.bind(null, eventType));

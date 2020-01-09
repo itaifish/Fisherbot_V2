@@ -1,6 +1,8 @@
 const config = require('../../docs/deploy/config.json');
 const Logger = require('../logger');
 
+//TODO: if (member.roles.some(role => role.name === '<role name>')) { <-- better way to check if user has role
+
 const getRoleIds = async (guild) => {
 	const roles = ['In Town', 'Out of Town'];
 	let roleIds = [];
