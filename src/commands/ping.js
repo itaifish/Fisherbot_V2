@@ -1,4 +1,5 @@
 const config = require('../../docs/deploy/config.json');
+const Discord = require('discord.js');
 
 module.exports = {
     commands: [
@@ -9,9 +10,15 @@ module.exports = {
             guildOnly: false,
             cooldown: config.defaultCooldown,
             method: function (message, args, bot) {
+                const title = this.name[0].toUpperCase() + this.name.slice(1);
                 const timeDifference = (Date.now() - message.createdAt);
                 const sendString = config.botName + ' is up! Ping is ' + timeDifference + " ms";
-                bot.sendOutput(message.channel, sendString, true, this.name);
+                const embedObj = new Discord.RichEmbed()
+                    .setColor('#0099ff')
+                    .setTitle(title)
+                    .setFooter(`Use ${config.prefix}$help to see commands`)
+                    .setDescription(sendString);
+                bot.sendOutput(message.channel, sendString, embedObj);
             }
         }
     ]
