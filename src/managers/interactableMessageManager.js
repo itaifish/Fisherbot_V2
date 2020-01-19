@@ -21,7 +21,7 @@ class InteractableMessageManager {
 		if(!this.guildUniqueMessageAndInteractions.has(guildChannelId)) {
 			return false;
 		}
-		const messageId = guildUniqueCommandMessageMap.get(commandNameKey); 
+		const messageId = this.guildUniqueCommandMessageMap.get(guildChannelId).get(commandNameKey); 
 		return this.guildUniqueMessageAndInteractions.get(guildChannelId).has(messageId);
 	}
 
@@ -42,9 +42,9 @@ class InteractableMessageManager {
 
 	deleteMessage(guildChannelId, commandNameKey) {
 		if(!this.guildUniqueMessageAndInteractions.has(guildChannelId)) {
-			this.guildUniqueMessageAndInteractions.set(guildChannelId, new Discord.Collection());
+			return;
 		}
-		const messageId = guildUniqueCommandMessageMap.get(commandNameKey); 
+		const messageId = this.guildUniqueCommandMessageMap.get(guildChannelId).get(commandNameKey); 
 		this.guildUniqueMessageAndInteractions.get(guildChannelId).delete(messageId);
 		this.guildUniqueCommandMessageMap.get(guildChannelId).delete(commandNameKey);
 	}

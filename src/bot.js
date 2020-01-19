@@ -2,7 +2,8 @@ const Discord = require('discord.js');
 const Logger = require('./logger');
 const fs = require('fs');
 const config = require('../docs/deploy/config.json');
-const InteractableMessageManager = require('./interactableMessageManager');
+const InteractableMessageManager = require('./managers/interactableMessageManager');
+const CommandDataManager = require('./managers/commandDataManager');
 
 class Bot {
 
@@ -14,7 +15,7 @@ class Bot {
 		this.commands = new Discord.Collection();
 		this.cooldowns = new Discord.Collection();
 		this.aliases = new Discord.Collection();
-		this.commandMaps = new Discord.Collection();
+		this.commandDataManager = new CommandDataManager();
 		this.interactableMessages = new InteractableMessageManager();
 		process.chdir(__dirname);//make sure to be in the right directory when dealing with relative paths
 		const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -29,18 +30,6 @@ class Bot {
 				}
 			}
 		}
-	}
-
-	createCommandMap(commandName, objectData) {
-		this.commandMaps.set(commandName, objectData);
-		return this.getCommandMap(commandName);
-	}
-
-	getCommandMap(commandName) {
-		if(this.commandMaps.has(commandName)) {
-			return this.commandMaps.get(commandName);
-		}
-		return null;
 	}
 
 	handleInput(messageObject) {
@@ -115,10 +104,9 @@ class Bot {
 		if(user.bot || message.author.id != this.client.user.id) {//if the user who reacted was a bot, or the message wasnt mine
 			return;
 		}
-		if(interactableMessages.hasMessage(message.channel.id, message)) {
-			interactableMessages.interactWithMessage(message.channel.id, message, emoji);
+		if(this.interactableMessages.hasMessage(message.channel.id, message)) {
+			this.interactableMessages.interactWithMessage(message.channel.id, message, emoji);
 		}
-		Logger.logMessage(`DEBUG`, `${user.username} reacted to ${message.content.substring(0, Math.min(message.content.length-1, 10))}, with ${emoji}`);
 	}
 
 	sendImage(channel, imageAttachment) {
