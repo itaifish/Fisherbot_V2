@@ -2,16 +2,21 @@ const Discord = require('discord.js');
 const Logger = require('./logger');
 const fs = require('fs');
 const config = require('../docs/deploy/config.json');
+const InteractableMessageManager = require('./managers/interactableMessageManager');
+const CommandDataManager = require('./managers/commandDataManager');
 
 class Bot {
 
-	constructor(prefix, delimiter) {
+	constructor(client, prefix, delimiter) {
 		this.id = Math.random().toString(36).substr(2, 9);
 		this.prefix = prefix;
+		this.client = client;
 		this.delimiter = delimiter;
 		this.commands = new Discord.Collection();
 		this.cooldowns = new Discord.Collection();
 		this.aliases = new Discord.Collection();
+		this.commandDataManager = new CommandDataManager();
+		this.interactableMessages = new InteractableMessageManager();
 		process.chdir(__dirname);//make sure to be in the right directory when dealing with relative paths
 		const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 		for(const file of commandFiles) {
@@ -76,26 +81,32 @@ class Bot {
 		Logger.logMessage('DEBUG', messageLogString);
 	}
 
-	sendOutput(channel, messageString, isCode=false, title='', footer=`Use ${this.prefix}help to get help`) {
+	sendOutput(channel, messageString, embedObj=null, callBackFunctionOnMessage=null) {
 		let sendFunction;
-		if(!isCode){ 
-			sendFunction = () => channel.send(messageString);
+		if(embedObj) {
+			sendFunction = () => channel.send(embedObj);
 		} else {
-			//Capitalize first letter of each word in title
-			title = title.replace(/\b[A-Za-z]/g, (character) => character.toUpperCase());
-			const embed = new Discord.RichEmbed()
-				.setTitle(title)
-				.setDescription(messageString)
-				.setColor(16763981)
-				.setFooter(footer);
-			sendFunction = () => channel.send(embed);
-		} 
+			sendFunction = () => channel.send(messageString);
+		}
+
 		sendFunction(messageString).then((messageSent) => {
 			const messageLogString = `${messageSent.author.username}[${parseInt(messageSent.author.id, 10).toString(36)}] (${messageSent.embeds.length} embeded data): ${messageSent.cleanContent}`;
 			Logger.logMessage('DEBUG', messageLogString);
+			if(callBackFunctionOnMessage) {
+				callBackFunctionOnMessage(messageSent);
+			}
 		}).catch((err) => {
 			Logger.logMessage('ERROR', err);
 		});
+	}
+
+	handleReact(message, emoji, user) {
+		if(user.bot || message.author.id != this.client.user.id) {//if the user who reacted was a bot, or the message wasnt mine
+			return;
+		}
+		if(this.interactableMessages.hasMessage(message.channel.id, message)) {
+			this.interactableMessages.interactWithMessage(message.channel.id, message, emoji);
+		}
 	}
 
 	sendImage(channel, imageAttachment) {

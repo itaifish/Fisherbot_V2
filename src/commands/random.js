@@ -1,4 +1,5 @@
 const config = require('../../docs/deploy/config.json');
+const Discord = require('discord.js');
 
 const getRandomInt = (min, max) => {
     min = Math.ceil(min);
@@ -17,6 +18,11 @@ module.exports = {
             cooldown: 0.5,
             aliases: 'random',
             method: function (message, args, bot) {
+                const title = this.name[0].toUpperCase() + this.name.slice(1);
+                const embedObj = new Discord.RichEmbed()
+                    .setColor('#0099ff')
+                    .setTitle(title)
+                    .setFooter('Value determined by texting Ben and asking him');
                 let numSides = 20;
                 let output = '';
                 if(args.length > 0) {
@@ -29,7 +35,8 @@ module.exports = {
                 }
                 const result = getRandomInt(1, numSides);
                 output += `Rolled d${numSides}: I got ${result}`;
-                bot.sendOutput(message.channel, output, true, this.name, 'Value determined by texting Ben and asking him');
+                embedObj.setDescription(output);
+                bot.sendOutput(message.channel, output, embedObj);
             }
         },
         {
@@ -40,11 +47,17 @@ module.exports = {
             guildOnly: false,
             cooldown: 0.5,
             method: function (message, args, bot) {
+                const title = this.name[0].toUpperCase() + this.name.slice(1);
                 let result = 'Heads';
                 if(Math.random() > 0.5) {
                     result = 'Tails';
                 }
-                bot.sendOutput(message.channel, result, true, this.name, 'Thankfully Max had a coin to borrow');
+                const embedObj = new Discord.RichEmbed()
+                    .setColor('#0099ff')
+                    .setTitle(title)
+                    .setFooter('Thankfully Max had a coin to borrow')
+                    .setDescription(result);
+                bot.sendOutput(message.channel, result, embedObj);
             }
         }
     ]

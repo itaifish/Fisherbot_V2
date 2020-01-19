@@ -45,6 +45,10 @@ class Logger {
 			const logString = "| [" + new Date() + "] " + logLevel.toUpperCase() + " |: " + message;
 			Logger.logStream.write(logString + "\n");
 			console.log(logString);
+			if(message instanceof Error) {
+				console.log(message);
+				Logger.logStream.write(`${message.stack}\n`);
+			}
 		}
 	}
 
