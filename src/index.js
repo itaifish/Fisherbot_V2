@@ -7,7 +7,7 @@ let singletonBot = null;
 
 client.once('ready', () => {
 	if(singletonBot == null) {
-		singletonBot = new Bot(config.prefix, config.delimiter);
+		singletonBot = new Bot(client, config.prefix, config.delimiter);
 	}
 	singletonBot.initMessage();
 });
@@ -16,6 +16,12 @@ client.on('message', message => {
 	if(singletonBot != null) {
 		singletonBot.handleInput(message);
 	}
+});
+
+client.on('messageReactionAdd', (messageReaction, user) => {
+	const message = messageReaction.message;
+	const emoji = messageReaction.emoji;
+	singletonBot.handleReact(message, emoji, user);
 });
 
 client.on('error', error => {

@@ -55,7 +55,7 @@ module.exports = {
                         ctx.lineWidth = memeToUseData.textSize/4;
                         const x = memeToUseData.textAreas[i][0];
                         const y = memeToUseData.textAreas[i][1];
-                        let maxWidth = 2*(canvas.width - x);
+                        let maxWidth = 2*Math.min(canvas.width - x, x);
                         //if horizontal meme
                         if(isHorizontal) {
                             const nextX = (memeToUseData.textAreas[i+1] ? memeToUseData.textAreas[i+1][0] : canvas.width + canvas.width - x);
