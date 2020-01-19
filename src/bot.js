@@ -2,17 +2,20 @@ const Discord = require('discord.js');
 const Logger = require('./logger');
 const fs = require('fs');
 const config = require('../docs/deploy/config.json');
+const InteractableMessageManager = require('./interactableMessageManager');
 
 class Bot {
 
-	constructor(prefix, delimiter) {
+	constructor(client, prefix, delimiter) {
 		this.id = Math.random().toString(36).substr(2, 9);
 		this.prefix = prefix;
+		this.client = client;
 		this.delimiter = delimiter;
 		this.commands = new Discord.Collection();
 		this.cooldowns = new Discord.Collection();
 		this.aliases = new Discord.Collection();
 		this.commandMaps = new Discord.Collection();
+		this.interactableMessages = new InteractableMessageManager();
 		process.chdir(__dirname);//make sure to be in the right directory when dealing with relative paths
 		const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 		for(const file of commandFiles) {
@@ -106,6 +109,16 @@ class Bot {
 		}).catch((err) => {
 			Logger.logMessage('ERROR', err);
 		});
+	}
+
+	handleReact(message, emoji, user) {
+		if(user.bot || message.author.id != this.client.user.id) {//if the user who reacted was a bot, or the message wasnt mine
+			return;
+		}
+		if(interactableMessages.hasMessage(message.channel.id, message)) {
+			interactableMessages.interactWithMessage(message.channel.id, message, emoji);
+		}
+		Logger.logMessage(`DEBUG`, `${user.username} reacted to ${message.content.substring(0, Math.min(message.content.length-1, 10))}, with ${emoji}`);
 	}
 
 	sendImage(channel, imageAttachment) {

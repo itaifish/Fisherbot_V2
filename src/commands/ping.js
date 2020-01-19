@@ -16,7 +16,7 @@ module.exports = {
                 const embedObj = new Discord.RichEmbed()
                     .setColor('#0099ff')
                     .setTitle(title)
-                    .setFooter(`Use ${config.prefix}$help to see commands`)
+                    .setFooter(`Use ${config.prefix}help to see commands`)
                     .setDescription(sendString);
                 bot.sendOutput(message.channel, sendString, embedObj);
             }
