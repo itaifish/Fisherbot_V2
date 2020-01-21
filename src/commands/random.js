@@ -1,11 +1,6 @@
 const config = require('../../docs/deploy/config.json');
 const Discord = require('discord.js');
-
-const getRandomInt = (min, max) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+const Utility = require('../helpers/utility');
 
 module.exports = {
     commands: [
@@ -33,7 +28,7 @@ module.exports = {
                         numSides = argVal;
                     }
                 }
-                const result = getRandomInt(1, numSides);
+                const result = Utility.getRandomInt(1, numSides);
                 output += `Rolled d${numSides}: I got ${result}`;
                 embedObj.setDescription(output);
                 bot.sendOutput(message.channel, output, embedObj);

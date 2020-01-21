@@ -1,5 +1,6 @@
 const config = require('../../docs/deploy/config.json');
-const Logger = require('../logger');
+const Path = require('path');
+const Logger = require(Path.resolve(global.appRoot, 'helpers/logger'));
 
 //TODO: if (member.roles.some(role => role.name === '<role name>')) { <-- better way to check if user has role
 

@@ -4,10 +4,14 @@
   "description": "Fisherbot, upgraded",
   "main": "index.js",
   "dependencies": {
+    "@discordjs/opus": "^0.1.0",
     "canvas": "^2.6.1",
-    "discord.js": "^11.5.1",
+    "discord.js": "github:discordjs/discord.js",
     "eslint": "^6.8.0",
-    "pm2": "^4.2.1"
+    "ffmpeg-static": "^3.0.0",
+    "libsodium-wrappers": "^0.7.6",
+    "node-opus": "^0.3.3",
+    "pm2": "^4.2.2"
   },
   "devDependencies": {},
   "scripts": {
