@@ -1,6 +1,7 @@
 const config = require('../../docs/deploy/config.json');
 const Discord = require('discord.js');
-const Logger = require('../logger');
+const Path = require('path');
+const Logger = require(Path.resolve(global.appRoot, 'helpers/logger'));
 
 module.exports = {
     commands: [
@@ -91,7 +92,7 @@ module.exports = {
                     response = this.generateCommandInfo(commands[0], bot, footer);
                 } else {
                     let commandName = args[0].trim().toLowerCase();
-                    response = this.generateCommandInfo(commandName, bot, `Use ${config.delimiter}${this.name} to get a navigable command list`);
+                    response = this.generateCommandInfo(commandName, bot, `Use ${config.prefix}${this.name} to get a navigable command list`);
                 }
                 bot.sendOutput(message.channel, response, (typeof response == 'string' ? null : response), callBackFunc);
             }

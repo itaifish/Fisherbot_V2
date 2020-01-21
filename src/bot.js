@@ -1,9 +1,11 @@
 const Discord = require('discord.js');
-const Logger = require('./logger');
+const Path = require('path');
+const Logger = require(Path.resolve(global.appRoot, 'helpers/logger'));
 const fs = require('fs');
 const config = require('../docs/deploy/config.json');
 const InteractableMessageManager = require('./managers/interactableMessageManager');
 const CommandDataManager = require('./managers/commandDataManager');
+const VoiceManager = require('./managers/voiceManager');
 
 class Bot {
 
@@ -17,6 +19,7 @@ class Bot {
 		this.aliases = new Discord.Collection();
 		this.commandDataManager = new CommandDataManager();
 		this.interactableMessages = new InteractableMessageManager();
+		this.voiceManager = new VoiceManager();
 		process.chdir(__dirname);//make sure to be in the right directory when dealing with relative paths
 		const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 		for(const file of commandFiles) {
@@ -109,8 +112,9 @@ class Bot {
 		}
 	}
 
-	sendImage(channel, imageAttachment) {
-		channel.send('', imageAttachment);
+	sendImage(channel, imageAttachment, callbackFunction=()=>{}) {
+		channel.send('', imageAttachment)
+			.then(callbackFunction());
 		Logger.logMessage('DEBUG', `Sending image ${imageAttachment.toString('base64')}`);
 	}
 

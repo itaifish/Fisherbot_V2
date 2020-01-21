@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
-const Logger = require('./logger');
+const Path = require('path');
+global.appRoot = Path.resolve(__dirname);
+const Logger = require(Path.resolve(global.appRoot, 'helpers/logger'));
 const Bot = require('./bot');
 const config = require('../docs/deploy/config.json');
 const client = new Discord.Client();

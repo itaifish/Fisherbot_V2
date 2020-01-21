@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const Canvas = require('canvas');
-const Logger = require('../logger');
+const Path = require('path');
+const Logger = require(Path.resolve(global.appRoot, 'helpers/logger'));
 const config = require('../../docs/deploy/config.json');
 const memeData = require('../../resources/images/memes/memes.json');
 module.exports = {
@@ -38,7 +39,8 @@ module.exports = {
                         bot.sendOutput(message.channel, `${memeToUse} requires exactly ${memeToUseData.textAreas.length + 1} arguments, you had ${args.length}`);
                         return;
                     }
-                    const memeBackground = await Canvas.loadImage(`../resources/images/memes/${memeToUseData.url}`)
+                    const memeBackground = await Canvas.loadImage(Path.resolve
+                        (global.appRoot,`../resources/images/memes/${memeToUseData.url}`))
                     .catch(
                         (err) => {
                             Logger.logMessage('ERROR', err);
@@ -66,7 +68,10 @@ module.exports = {
                     }
 
                     const attachment = new Discord.Attachment(canvas.toBuffer(), `meme.png`);
-                    bot.sendImage(message.channel, attachment);
+                    const callBack = () => {
+                        message.delete(0);
+                    };
+                    bot.sendImage(message.channel, attachment, callBack);
                 } else {
                     bot.sendOutput(message.channel, `Unable to find meme: ${memeToUse}`);
                 }
