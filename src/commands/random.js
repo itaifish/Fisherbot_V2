@@ -14,7 +14,7 @@ module.exports = {
             aliases: 'random',
             method: function (message, args, bot) {
                 const title = this.name[0].toUpperCase() + this.name.slice(1);
-                const embedObj = new Discord.RichEmbed()
+                const embedObj = new Discord.MessageEmbed()
                     .setColor('#0099ff')
                     .setTitle(title)
                     .setFooter('Value determined by texting Ben and asking him');
@@ -47,7 +47,7 @@ module.exports = {
                 if(Math.random() > 0.5) {
                     result = 'Tails';
                 }
-                const embedObj = new Discord.RichEmbed()
+                const embedObj = new Discord.MessageEmbed()
                     .setColor('#0099ff')
                     .setTitle(title)
                     .setFooter('Thankfully Max had a coin to borrow')
