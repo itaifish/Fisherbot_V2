@@ -17,7 +17,7 @@ module.exports = {
                     commandName = bot.aliases.get(commandName);
                 }
                 if(bot.commands.has(commandName)) {
-                    const embedObj = new Discord.RichEmbed()
+                    const embedObj = new Discord.MessageEmbed()
                         .setColor('#0099ff')
                         .setFooter(footer);
                     const commandData = bot.commands.get(commandName);

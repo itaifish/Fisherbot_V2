@@ -13,7 +13,7 @@ module.exports = {
                 const title = this.name[0].toUpperCase() + this.name.slice(1);
                 const timeDifference = (Date.now() - message.createdAt);
                 const sendString = config.botName + ' is up! Ping is ' + timeDifference + " ms";
-                const embedObj = new Discord.RichEmbed()
+                const embedObj = new Discord.MessageEmbed()
                     .setColor('#0099ff')
                     .setTitle(title)
                     .setFooter(`Use ${config.prefix}help to see commands`)
