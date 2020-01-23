@@ -25,8 +25,8 @@ module.exports = {
                             output += `${memeName}: ${memeData[memeName].textAreas.length} arguments\n`;
                         }
                         output += `
-                            Example: ${this.example}
-                            The order of text will always be left to right, top to bottom`;
+                        Example: ${this.example}
+                        The order of text will always be left to right, top to bottom`;
                         return bot.sendOutput(message.channel, output);
                     } else {
                         return bot.sendOutput(message.channel, `Unknown arguments. Please use ${config.prefix}${this.name}${config.delimiter}details for more information.`);
@@ -67,7 +67,7 @@ module.exports = {
                         ctx.fillText(args[1+i], x, y, maxWidth);
                     }
 
-                    const attachment = new Discord.Attachment(canvas.toBuffer(), `meme.png`);
+                    const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `meme.png`);
                     const callBack = () => {
                         message.delete(0);
                     };
