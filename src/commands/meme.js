@@ -25,8 +25,8 @@ module.exports = {
                             output += `${memeName}: ${memeData[memeName].textAreas.length} arguments\n`;
                         }
                         output += `
-                            Example: ${this.example}
-                            The order of text will always be left to right, top to bottom`;
+                        Example: ${this.example}
+                        The order of text will always be left to right, top to bottom`;
                         return bot.sendOutput(message.channel, output);
                     } else {
                         return bot.sendOutput(message.channel, `Unknown arguments. Please use ${config.prefix}${this.name}${config.delimiter}details for more information.`);
