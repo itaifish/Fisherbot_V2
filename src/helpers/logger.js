@@ -1,6 +1,6 @@
 const config = require('../../docs/deploy/config.json');
 const fs = require('fs');
-const logPath = '../logs/';
+const logPath = '../../logs/';
 const logFileName = 'log' + new Date().getTime() + '.log';
 
 class Logger {

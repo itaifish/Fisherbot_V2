@@ -13,14 +13,14 @@ class VoiceManager {
 			const connection = await voiceChannel.join();
 			const dispatcher = connection.play(clipUrl);
 			dispatcher.on('start', () => {
-				Logger.logMessage('DEBUG', 'start');
+				//Logger.logMessage('DEBUG', 'start');
 			});
 			dispatcher.on('error', (err)=> {
 				Logger.logMessage('ERROR', err);
 			});
 			dispatcher.on('finish', () => {
 				connection.disconnect();
-				Logger.logMessage('DEBUG', 'Finished');
+				//Logger.logMessage('DEBUG', 'Finished');
 			});
 		} else {
 			return `Please Join a Voice Channel to use that command`;

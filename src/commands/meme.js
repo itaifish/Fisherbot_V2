@@ -67,7 +67,7 @@ module.exports = {
                         ctx.fillText(args[1+i], x, y, maxWidth);
                     }
 
-                    const attachment = new Discord.Attachment(canvas.toBuffer(), `meme.png`);
+                    const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `meme.png`);
                     const callBack = () => {
                         message.delete(0);
                     };
