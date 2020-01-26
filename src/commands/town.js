@@ -38,11 +38,11 @@ const replaceMemberRole = async (fromRole, toRole, message, bot) => {
 		bot.sendOutput(message.channel, `You are already '${toRole}'`);
 		return;
 	} else if(message.member.roles.has(roleIds[fromRole])) {
-		message.member.removeRole(roleIds[fromRole]).catch((err) => {
+		message.member.roles.remove(roleIds[fromRole]).catch((err) => {
 			Logger.logMessage('ERROR', err);
 		});
 	}
-	message.member.addRole(roleIds[toRole]).catch((err) => {
+	message.member.roles.add(roleIds[toRole]).catch((err) => {
 		Logger.logMessage('ERROR', err);
 	});
 	bot.sendOutput(message.channel, `You are now set to be '${toRole}'`);
