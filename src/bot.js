@@ -19,7 +19,7 @@ class Bot {
 		this.aliases = new Discord.Collection();
 		this.commandDataManager = new CommandDataManager();
 		this.interactableMessages = new InteractableMessageManager();
-		this.voiceManager = new VoiceManager();
+		this.voiceManager = new VoiceManager(this);
 		process.chdir(__dirname);//make sure to be in the right directory when dealing with relative paths
 		const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 		for(const file of commandFiles) {

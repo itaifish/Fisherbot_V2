@@ -5,6 +5,7 @@ class InteractableMessageManager {
 	constructor() {
 		this.guildUniqueMessageAndInteractions = new Discord.Collection();
 		this.guildUniqueCommandMessageMap = new Discord.Collection();
+		this.messageIdToMessageObjectMap = new Discord.Collection();
 	}
 
 	setMessage(guildChannelId, message, commandNameKey, messageInteractionFunction) {
@@ -15,6 +16,7 @@ class InteractableMessageManager {
 		}
 		this.guildUniqueMessageAndInteractions.get(guildChannelId).set(message.id, interactWithMessageFunc);
 		this.guildUniqueCommandMessageMap.get(guildChannelId).set(commandNameKey, message.id);
+		this.messageIdToMessageObjectMap.set(message.id, message);
 	}
 
 	hasCommand(guildChannelId, commandNameKey) {
@@ -47,6 +49,11 @@ class InteractableMessageManager {
 		const messageId = this.guildUniqueCommandMessageMap.get(guildChannelId).get(commandNameKey); 
 		this.guildUniqueMessageAndInteractions.get(guildChannelId).delete(messageId);
 		this.guildUniqueCommandMessageMap.get(guildChannelId).delete(commandNameKey);
+		const actualMessage = this.messageIdToMessageObjectMap.get(messageId);
+		if(actualMessage) {
+			actualMessage.delete(0);
+		}
+		this.messageIdToMessageObjectMap.delete(messageId);
 	}
 	
 }
