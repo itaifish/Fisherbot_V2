@@ -8,11 +8,11 @@ module.exports = {
     commands: [
         {
             get name() { return  'clip'},
-            description: `Plays a clip. Use ${config.prefix}${this.name}${config.delimiter}details for more information.`,
+            description: `Plays a clip. Use ${config.prefix}${this.name}${config.delimiter}list for the list of clips.`,
             isAdmin: false,
             get example() { return `${config.prefix}${this.name}${config.delimiter}diamonds`},
             guildOnly: true,
-            aliases: ['play'],
+            aliases: ['play', 'clips'],
             cooldown: 10,
             method: async function (message, args, bot) {
                 const vChannel = message.member.voice.channel;
@@ -37,27 +37,31 @@ module.exports = {
                     }
                 }
                 const clipsname = args[0].trim().toLowerCase();
-                let uriName = null;
-                const fileTypes = ['.mp3','.wav'];
-                for(let i = 0; i < this.clips.length; i++) {
-                    for(let j = 0; j < fileTypes.length; j++) {
-                        if(this.clips[i] == `${clipsname}${fileTypes[j]}`) {
-                            uriName = this.clips[i];
-                            i = this.clips.length;//leave for loop
-                            break;
+                if(clipsname != 'list') {
+                    let uriName = null;
+                    const fileTypes = ['.mp3','.wav'];
+                    for(let i = 0; i < this.clips.length; i++) {
+                        for(let j = 0; j < fileTypes.length; j++) {
+                            if(this.clips[i] == `${clipsname}${fileTypes[j]}`) {
+                                uriName = this.clips[i];
+                                i = this.clips.length;//leave for loop
+                                break;
+                            }
+                        } 
+                    }
+                    if(uriName) {
+                        const songPath = Path.resolve(global.appRoot, clipsLocation, uriName);
+                        Logger.logMessage('DEBUG', `Playing song at path ${songPath}`);
+                        const result = bot.voiceManager.playClip(songPath, message, this.name);
+                        if(typeof result == 'string') {
+                            return bot.sendOutput(message.channel, result);
                         }
-                    } 
-                }
-                if(uriName) {
-                    const songPath = Path.resolve(global.appRoot, clipsLocation, uriName);
-                    Logger.logMessage('DEBUG', `Playing song at path ${songPath}`);
-                    const result = bot.voiceManager.playClip(songPath, message, this.name);
-                    if(typeof result == 'string') {
-                        return bot.sendOutput(message.channel, result);
+                    } else {
+                        Logger.logMessage('DEBUG', this.clips);
+                        return bot.sendOutput(message.channel, `Unable to find clip '${clipsname}'. Use ${config.prefix}${this.name}${config.delimiter}list for the list of clips.`);
                     }
                 } else {
-                    Logger.logMessage('DEBUG', this.clips);
-                    return bot.sendOutput(message.channel, `Unable to find clip '${clipsname}'. Use ${config.prefix}${this.name}${config.delimiter}details for more information.`);
+                    bot.sendOutput(message.channel, this.clips);
                 }
             }
         }
