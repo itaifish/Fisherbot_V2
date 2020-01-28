@@ -20,6 +20,7 @@ module.exports = {
                     return bot.sendOutput(message.channel, `Please join a voice channel first`);
                 }
                 const clipsLocation = `../resources/audio/clips`;
+                //Only ever load the clips once
                 if(!this.clips) {
                     const readdirFunc = util.promisify(fs.readdir);
                     process.chdir(global.appRoot);//move to root directory
