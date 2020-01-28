@@ -20,7 +20,7 @@ module.exports = {
                     return bot.sendOutput(message.channel, `Please join a voice channel first`);
                 }
                 process.chdir(global.appRoot);//move to root directory
-                const chesterClipLocation = `../resources/clips/chester`;
+                const chesterClipLocation = `../resources/audio/chester`;
                 if(!fs.existsSync(chesterClipLocation)) {
                     Logger.logMessage('WARN', `Unable to find any clips in location "${chesterClipLocation}"`);
                     return bot.sendOutput(message.channel, `I can't find any chester clips :(`);
