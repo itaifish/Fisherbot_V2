@@ -8,7 +8,7 @@ module.exports = {
     commands: [
         {
             get name() { return  'clip'},
-            description: `Plays a clip. Use ${config.prefix}${this.name}${config.delimiter}list for the list of clips.`,
+            get description() { return `Plays a clip. Use ${config.prefix}${this.name}${config.delimiter}list for the list of clips.`},
             isAdmin: false,
             get example() { return `${config.prefix}${this.name}${config.delimiter}diamonds`},
             guildOnly: true,
