@@ -57,13 +57,13 @@ module.exports = {
                         switch(emote.toString()) {
                             case '⏪':
                                 index = 0;
-                                break;
+                            break;
                             case '⬅️':
                                 index -= 1;
-                                break;
+                            break;
                             case '➡️':
                                 index += 1;
-                                break;
+                            break;
                             case '⏩':
                                 index = channelData.commands.length - 1;
                         }
