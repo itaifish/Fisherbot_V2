@@ -61,6 +61,14 @@
             [350, 700],
             [350, 1167]
         ]
+    },
+    "itaiwhen": {
+        "url": "itaiwhen.jpg",
+        "width": 317,
+        "height": 583,
+        "textSize": 18,
+        "textAreas": [
+            [158, 50]
+        ]
     }
-    
 }

@@ -15,10 +15,6 @@ module.exports = {
             aliases: ['play', 'clips'],
             cooldown: 10,
             method: async function (message, args, bot) {
-                const vChannel = message.member.voice.channel;
-                if(!vChannel) {
-                    return bot.sendOutput(message.channel, `Please join a voice channel first`);
-                }
                 const clipsLocation = `../resources/audio/clips`;
                 //Only ever load the clips once
                 if(!this.clips) {
@@ -38,6 +34,10 @@ module.exports = {
                 }
                 const clipsname = args[0].trim().toLowerCase();
                 if(clipsname != 'list') {
+                    const vChannel = message.member.voice.channel;
+                    if(!vChannel) {
+                        return bot.sendOutput(message.channel, `Please join a voice channel first`);
+                    }
                     let uriName = null;
                     const fileTypes = ['.mp3','.wav'];
                     for(let i = 0; i < this.clips.length; i++) {
