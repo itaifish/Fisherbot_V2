@@ -104,9 +104,15 @@ class Bot {
 	}
 
 	handleReact(message, emoji, user) {
+		if(emoji == 719641226747576391) {
+			message.pin();
+			return;
+		}
+
 		if(user.bot || message.author.id != this.client.user.id) {//if the user who reacted was a bot, or the message wasnt mine
 			return;
 		}
+		
 		if(this.interactableMessages.hasMessage(message.channel.id, message)) {
 			this.interactableMessages.interactWithMessage(message.channel.id, message, emoji);
 		}
