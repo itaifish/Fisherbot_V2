@@ -54,12 +54,11 @@ module.exports = {
                     if(args[0] && args[0].trim().toLowerCase() == 'details') {
                         const scale = 0.1;
                         for(let memeName of Object.keys(memeData)) {
-                            const args = Array.from(Array(memeData.textAreas.length).keys());
+                            const args = Array.from(Array(memeData[memeName].textAreas.length).keys());
                             const canvas = drawMeme(memeData[memeName], args, scale);
                             const memeAttachment = new Discord.MessageAttachment(canvas.toBuffer(), `${memeName}.png`);
                             bot.sendOutput(message.channel, `${memeName}`, memeAttachment);
                         }
-                        
                     } else {
                         return bot.sendOutput(message.channel, `Unknown arguments. Please use ${config.prefix}${this.name}${config.delimiter}details for more information.`);
                     }
