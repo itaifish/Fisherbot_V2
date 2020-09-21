@@ -34,6 +34,8 @@ const drawMeme = async (meme, text, scale=1) => {
         ctx.strokeText(text[1+i], x, y, maxWidth);
         ctx.fillText(text[1+i], x, y, maxWidth);
     }
+    canvas.width = canvas.width*scale;
+    canvas.height = canvas.height*scale;
     return canvas;
 }
 
@@ -53,10 +55,10 @@ module.exports = {
             method: async function (message, args, bot) {
                 if(args.length <= 1) {
                     if(args[0] && args[0].trim().toLowerCase() == 'details') {
-                        const scale = 0.5;
+                        const scale = 0.35;
                         let memeName = Object.keys(memeData)[0];
                         //for(let memeName of Object.keys(memeData)) {
-                            const args = Array.from(Array(memeData[memeName].textAreas.length).keys());
+                            const args = Array.from(Array(memeData[memeName].textAreas.length + 1).keys());
                             const canvas = await drawMeme(memeData[memeName], args, scale);
                             const memeAttachment = new Discord.MessageAttachment(canvas.toBuffer(), `${memeName}.png`);
                             bot.sendOutput(message.channel, `${memeName}`, memeAttachment);
