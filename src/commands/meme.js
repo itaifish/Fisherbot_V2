@@ -52,7 +52,7 @@ module.exports = {
             method: async function (message, args, bot) {
                 if(args.length <= 1) {
                     if(args[0] && args[0].trim().toLowerCase() == 'details') {
-                        const scale = 0.1;
+                        const scale = 0.5;
                         let memeName = Object.keys(memeData)[0];
                         //for(let memeName of Object.keys(memeData)) {
                             const args = Array.from(Array(memeData[memeName].textAreas.length).keys());
