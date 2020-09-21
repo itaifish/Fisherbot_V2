@@ -55,7 +55,7 @@ module.exports = {
                         const scale = 0.1;
                         for(let memeName of Object.keys(memeData)) {
                             const args = Array.from(Array(memeData[memeName].textAreas.length).keys());
-                            const canvas = drawMeme(memeData[memeName], args, scale);
+                            const canvas = await drawMeme(memeData[memeName], args, scale);
                             const memeAttachment = new Discord.MessageAttachment(canvas.toBuffer(), `${memeName}.png`);
                             bot.sendOutput(message.channel, `${memeName}`, memeAttachment);
                         }
@@ -70,7 +70,7 @@ module.exports = {
                         bot.sendOutput(message.channel, `${memeToUse} requires exactly ${memeToUseData.textAreas.length + 1} arguments, you had ${args.length}`);
                         return;
                     }
-                    const canvas = drawMeme(memeToUseData, args);
+                    const canvas = await drawMeme(memeToUseData, args);
                     const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `meme.png`);
                     const callBack = () => {
                         message.delete(0);
