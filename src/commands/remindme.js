@@ -31,7 +31,7 @@ const parseHumanTime = (timeToParse) => {
 
 const msToTime = (ms) => {
   let pad = (n, z = 2) => ('00' + n).slice(-z);
-  return pad(ms/3.6e6|0) + ':' + pad((ms%3.6e6)/6e4 | 0) + ':' + pad((ms%6e4)/1000|0);
+  return Math.floor(ms/3.6e6|0) + ':' + pad((ms%3.6e6)/6e4 | 0) + ':' + pad((ms%6e4)/1000|0);
 }
 
 module.exports = {
