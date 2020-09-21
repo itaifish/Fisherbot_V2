@@ -12,16 +12,17 @@ const drawMeme = async (meme, text, scale=1) => {
         (err) => {
             Logger.logMessage('ERROR', err);
     });
-    const canvas = Canvas.createCanvas(meme.width*scale, meme.height*scale);
+    const canvas = Canvas.createCanvas(meme.width, meme.height);
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(memeBackground, 0, 0, canvas.width*scale, canvas.height*scale);
+    ctx.scale(scale, scale);
+    ctx.drawImage(memeBackground, 0, 0, canvas.width, canvas.height);
     ctx.fillStyle = 'white';
     ctx.textAlign = "center";
     ctx.font = `${meme.textSize}px sans-serif`;
     const isHorizontal = (meme.textAreas.length >= 2 && meme.textAreas[0][1] == meme.textAreas[1][1]);
     for(let i = 0; i < meme.textAreas.length; i++) {
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = meme.textSize/(4/scale);
+        ctx.lineWidth = meme.textSize/(4);
         const x = meme.textAreas[i][0];
         const y = meme.textAreas[i][1];
         let maxWidth = 2*Math.min(canvas.width - x, x);
@@ -30,8 +31,8 @@ const drawMeme = async (meme, text, scale=1) => {
             const nextX = (meme.textAreas[i+1] ? meme.textAreas[i+1][0] : canvas.width + canvas.width - x);
             maxWidth =  (nextX - x);
         }
-        ctx.strokeText(text[1+i], x*scale, y*scale, maxWidth*scale);
-        ctx.fillText(text[1+i], x*scale, y*scale, maxWidth*scale);
+        ctx.strokeText(text[1+i], x, y, maxWidth);
+        ctx.fillText(text[1+i], x, y, maxWidth);
     }
     return canvas;
 }
