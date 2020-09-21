@@ -21,7 +21,7 @@ const drawMeme = async (meme, text, scale=1) => {
     const isHorizontal = (meme.textAreas.length >= 2 && meme.textAreas[0][1] == meme.textAreas[1][1]);
     for(let i = 0; i < meme.textAreas.length; i++) {
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = meme.textSize/4;
+        ctx.lineWidth = meme.textSize/(4*scale);
         const x = meme.textAreas[i][0];
         const y = meme.textAreas[i][1];
         let maxWidth = 2*Math.min(canvas.width - x, x);
@@ -30,8 +30,8 @@ const drawMeme = async (meme, text, scale=1) => {
             const nextX = (meme.textAreas[i+1] ? meme.textAreas[i+1][0] : canvas.width + canvas.width - x);
             maxWidth =  (nextX - x);
         }
-        ctx.strokeText(text[1+i], x, y, maxWidth);
-        ctx.fillText(text[1+i], x, y, maxWidth);
+        ctx.strokeText(text[1+i], x/scale, y/scale, maxWidth/scale);
+        ctx.fillText(text[1+i], x/scale, y/scale, maxWidth/scale);
     }
     return canvas;
 }
@@ -53,12 +53,13 @@ module.exports = {
                 if(args.length <= 1) {
                     if(args[0] && args[0].trim().toLowerCase() == 'details') {
                         const scale = 0.1;
-                        for(let memeName of Object.keys(memeData)) {
+                        let memeName = Object.keys(memeData)[0];
+                        //for(let memeName of Object.keys(memeData)) {
                             const args = Array.from(Array(memeData[memeName].textAreas.length).keys());
                             const canvas = await drawMeme(memeData[memeName], args, scale);
                             const memeAttachment = new Discord.MessageAttachment(canvas.toBuffer(), `${memeName}.png`);
                             bot.sendOutput(message.channel, `${memeName}`, memeAttachment);
-                        }
+                        //}
                     } else {
                         return bot.sendOutput(message.channel, `Unknown arguments. Please use ${config.prefix}${this.name}${config.delimiter}details for more information.`);
                     }
