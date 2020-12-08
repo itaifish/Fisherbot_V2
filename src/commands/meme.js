@@ -41,7 +41,7 @@ const drawMeme = async (memeToUseData, canvas, textArray, avatar) => {
     if(avatar) {
         Logger.logMessage("DEBUG", `Avatar: ${avatar}`);
         const avatarLogo = await Canvas.loadImage(avatar);
-        ctx.drawImage(avatarLogo, 0, 0);
+        ctx.drawImage(avatarLogo, 0, canvas.height - avatarLogo.height);
     }
 };
 
