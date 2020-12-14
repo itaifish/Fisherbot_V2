@@ -8,7 +8,7 @@ const getRoleIds = async (guild) => {
     const roles = ["In Town", "Out of Town"];
     const roleIds = [];
     for(const roleName of roles) {
-        new Promise((resolve, reject) => {
+        roleIds[roleName] = await new Promise((resolve, reject) => {
             guild.roles.fetch().then(guildRoles => {
                 const idVal = guildRoles.find(role => role.name === roleName);
                 if(idVal) {
@@ -27,10 +27,7 @@ const getRoleIds = async (guild) => {
                     });
                 }
             });
-        }).then((idVal) => {
-            roleIds[roleName] = idVal;
         });
-
     }
     return roleIds;
 };
