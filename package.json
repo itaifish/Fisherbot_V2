@@ -4,17 +4,16 @@
   "description": "Fisherbot, upgraded",
   "main": "index.js",
   "dependencies": {
-    "@discordjs/opus": "^0.1.0",
+    "@discordjs/opus": "^0.3.3",
     "canvas": "^2.6.1",
-    "discord.js": "github:discordjs/discord.js",
-    "eslint": "^6.8.0",
-    "ffmpeg-static": "^3.0.0",
-    "libsodium-wrappers": "^0.7.6",
-    "node-opus": "^0.3.3",
-    "node-pre-gyp": "^0.15.0",
+    "discord.js": "^12.5.1",
+    "ffmpeg-static": "^4.2.7",
+    "libsodium-wrappers": "^0.7.8",
     "pm2": "^4.2.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^6.8.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

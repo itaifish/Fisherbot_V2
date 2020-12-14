@@ -70,5 +70,15 @@
         "textAreas": [
             [158, 50]
         ]
+    },
+    "bryslap": {
+        "url": "bryslap.jpg",
+        "width": 1224,
+        "height": 688,
+        "textSize": 35,
+        "textAreas": [
+            [269, 349],
+            [906, 384]
+        ]
     }
 }
