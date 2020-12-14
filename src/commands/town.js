@@ -9,7 +9,8 @@ const getRoleIds = async (guild) => {
 	let roleIds = [];
 	for(let roleName of roles) {
 		const id = new Promise((resolve, reject) => {
-			let idVal = guild.roles.find(x => x.name === roleName);
+			const roles = await guild.roles.fetch();
+			let idVal = roles.find(role => role.name === roleName);
 			if(idVal) {
 				resolve(idVal.id);
 			} else {

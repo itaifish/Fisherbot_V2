@@ -12,7 +12,7 @@ const drawMeme = async (meme, text, scale=1) => {
         (err) => {
             Logger.logMessage('ERROR', err);
     });
-    const canvas = Canvas.createCanvas(meme.width*scale, meme.height*scale);
+    const canvas = Canvas.createCanvas(meme.width, meme.height);
     const ctx = canvas.getContext('2d');
     ctx.scale(scale, scale);
     ctx.drawImage(memeBackground, 0, 0, canvas.width, canvas.height);

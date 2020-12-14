@@ -11,6 +11,7 @@
     "ffmpeg-static": "^3.0.0",
     "libsodium-wrappers": "^0.7.6",
     "node-opus": "^0.3.3",
+    "node-pre-gyp": "^0.15.0",
     "pm2": "^4.2.2"
   },
   "devDependencies": {},
