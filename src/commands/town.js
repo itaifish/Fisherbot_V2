@@ -34,11 +34,12 @@ const getRoleIds = async (guild) => {
 
 const replaceMemberRole = async (fromRole, toRole, message, bot) => {
     const roleIds = await getRoleIds(message.guild);
-    if(message.member.roles.has(roleIds[toRole])) {
+    const roleCache = message.member.roles.cache;
+    if(roleCache.has(roleIds[toRole])) {
         bot.sendOutput(message.channel, `You are already '${toRole}'`);
         return;
     }
-    else if(message.member.roles.has(roleIds[fromRole])) {
+    else if(roleCache.has(roleIds[fromRole])) {
         message.member.roles.remove(roleIds[fromRole]).catch((err) => {
             Logger.logMessage("ERROR", err);
         });
