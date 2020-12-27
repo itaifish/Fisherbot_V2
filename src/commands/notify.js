@@ -1,6 +1,7 @@
 const config = require("../../docs/deploy/config.json");
 const Utility = require("../helpers/utility");
 const Logger = require("../helpers/logger");
+const { logMessage } = require("../helpers/logger");
 
 module.exports = {
     commands: [
@@ -9,8 +10,9 @@ module.exports = {
             description: "Tell the bot to PM a user either now or on a delay",
             get example() { return `${config.prefix}${this.name}, Fisherswamp#4306, Hey Itai! - Ben, 30 seconds`;},
             guildOnly: false,
-            cooldown: 30,
-            method: function(message, args, bot) {
+            cooldown: 0,
+            aliases: ["pm", "whisper", "tell"],
+            method: async function(message, args, bot) {
                 if(args.length < 2 || args.length > 3) {
                     bot.sendOutput(message.channel, `The ${this.name} command requires 2-3 arguments. You had ${args.length}`);
                     return;
@@ -31,7 +33,30 @@ module.exports = {
                     }
                 }
                 else {
-                    bot.sendOutput(message.channel, `Could not find user ${userName}\n(If the user has not talked to me before, I won't be able to find them)`);
+                    const promises = [];
+                    bot.client.guilds.cache.forEach(guild => {
+                        promises.push(guild.members.fetch());
+                    });
+                    await Promise.all(promises);
+                    const userFindTryTwo = bot.client.users.cache.find(user => user.tag === userName);
+                    if(userFindTryTwo) {
+                        if(!args[2]) {
+                            bot.sendOutput(userFindTryTwo, args[1]);
+                        }
+                        else {
+                            const evaluation = Utility.parseHumanTime(args[2]);
+                            if(evaluation.evaluatedMs <= 0) {
+                                bot.sendOutput(message.channel, `I am unable to understand ${args[2]} as a time, or it is 0. Please enter a valid time longer than 0 seconds.`);
+                                return;
+                            }
+                            setTimeout(() => bot.sendOutput(userFindTryTwo, args[1]), evaluation.evaluatedMs);
+                        }
+                    }
+                    else {
+                        bot.sendOutput(message.channel, `Could not find user ${userName}`);
+                    }
+
+
                 }
             },
         },
