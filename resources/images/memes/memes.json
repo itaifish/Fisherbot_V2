@@ -80,5 +80,16 @@
             [269, 349],
             [906, 384]
         ]
+    },
+    "chadhands": {
+        "url": "chadhands.png",
+        "width": 900,
+        "height": 506,
+        "textSize": 28,
+        "textAreas": [
+            [119, 317],
+            [339, 135],
+            [652, 316]
+        ]
     }
 }
