@@ -19,7 +19,8 @@ module.exports = {
                 // Only ever load the clips once
                 if(!this.clips) {
                     const readdirFunc = util.promisify(fs.readdir);
-                    process.chdir(global.appRoot);// move to root directory
+                    // move to root directory
+                    process.chdir(global.appRoot);
                     if(!fs.existsSync(clipsLocation)) {
                         Logger.logMessage("WARN", `Unable to find any clips in location "${clipsLocation}"`);
                         return bot.sendOutput(message.channel, "I can't find any chester clips :(");
@@ -45,12 +46,15 @@ module.exports = {
                         for(let j = 0; j < fileTypes.length; j++) {
                             if(this.clips[i] == `${clipsname}${fileTypes[j]}`) {
                                 uriName = this.clips[i];
-                                i = this.clips.length;// leave for loop
+                                // leave for loop
+                                i = this.clips.length;
                                 break;
                             }
                         }
                     }
+
                     if(uriName) {
+                        Logger.logMessage("DEBUG", `\n\n\n\FOUND URINAME: ${uriName}`);
                         const songPath = Path.resolve(global.appRoot, clipsLocation, uriName);
                         Logger.logMessage("DEBUG", `Playing song at path ${songPath}`);
                         const result = bot.voiceManager.playClip(songPath, message, this.name);
