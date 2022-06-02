@@ -1,95 +1,100 @@
 {
-    "boyfriend" : {
-        "url": "boyfriend.jpg",
-        "width": 1200,
-        "height": 800,
-        "textSize": 33,
-        "textAreas": [
-            [334, 127],
-            [637, 76],
-            [975, 188]
-        ]
-    },
-    "buttons" : {
-        "url": "buttons.jpg",
-        "width": 600,
-        "height": 900,
-        "textSize": 25,
-        "textAreas": [
-            [157, 142],
-            [303, 486],
-            [358, 105]
-        ]
-    },
-    "cat" : {
-        "url": "cat.jpg",
-        "width": 680,
-        "height": 438,
-        "textSize": 22,
-        "textAreas": [
-            [170, 50],
-            [510, 50]
-        ]
-    },
-    "drake" : {
-        "url": "drake.jpg",
-        "width": 1200,
-        "height": 1200,
-        "textSize": 40,
-        "textAreas": [
-            [900, 300],
-            [900, 900]
-        ]
-    },
-    "mockbob": {
-        "url": "mockbob.jpg",
-        "width": 500,
-        "height": 350,
-        "textSize": 27,
-        "textAreas": [
-            [250, 50],
-            [250, 300]
-        ]
-    },
-    "brain": {
-        "url": "brain.jpg",
-        "width": 1440,
-        "height": 1400,
-        "textSize": 35,
-        "textAreas": [
-            [350, 233],
-            [350, 700],
-            [350, 1167]
-        ]
-    },
-    "itaiwhen": {
-        "url": "itaiwhen.jpg",
-        "width": 317,
-        "height": 583,
-        "textSize": 18,
-        "textAreas": [
-            [158, 50]
-        ]
-    },
-    "bryslap": {
-        "url": "bryslap.jpg",
-        "width": 1224,
-        "height": 688,
-        "textSize": 35,
-        "textAreas": [
-            [269, 349],
-            [906, 384]
-        ]
-    },
-    "chadhands": {
-        "url": "chadhands.png",
-        "width": 900,
-        "height": 506,
-        "textSize": 28,
-        "textAreas": [
-            [119, 317],
-            [339, 135],
-            [652, 316]
-        ]
-    }
+	"boyfriend": {
+		"url": "boyfriend.jpg",
+		"width": 1200,
+		"height": 800,
+		"textSize": 33,
+		"textAreas": [
+			[334, 127],
+			[637, 76],
+			[975, 188]
+		]
+	},
+	"buttons": {
+		"url": "buttons.jpg",
+		"width": 600,
+		"height": 900,
+		"textSize": 25,
+		"textAreas": [
+			[157, 142],
+			[303, 486],
+			[358, 105]
+		]
+	},
+	"cat": {
+		"url": "cat.jpg",
+		"width": 680,
+		"height": 438,
+		"textSize": 22,
+		"textAreas": [
+			[170, 50],
+			[510, 50]
+		]
+	},
+	"drake": {
+		"url": "drake.jpg",
+		"width": 1200,
+		"height": 1200,
+		"textSize": 40,
+		"textAreas": [
+			[900, 300],
+			[900, 900]
+		]
+	},
+	"mockbob": {
+		"url": "mockbob.jpg",
+		"width": 500,
+		"height": 350,
+		"textSize": 27,
+		"textAreas": [
+			[250, 50],
+			[250, 300]
+		]
+	},
+	"brain": {
+		"url": "brain.jpg",
+		"width": 1440,
+		"height": 1400,
+		"textSize": 35,
+		"textAreas": [
+			[350, 233],
+			[350, 700],
+			[350, 1167]
+		]
+	},
+	"itaiwhen": {
+		"url": "itaiwhen.jpg",
+		"width": 317,
+		"height": 583,
+		"textSize": 18,
+		"textAreas": [[158, 50]]
+	},
+	"bryslap": {
+		"url": "bryslap.jpg",
+		"width": 1224,
+		"height": 688,
+		"textSize": 35,
+		"textAreas": [
+			[269, 349],
+			[906, 384]
+		]
+	},
+	"chadhands": {
+		"url": "chadhands.png",
+		"width": 900,
+		"height": 506,
+		"textSize": 28,
+		"textAreas": [
+			[119, 317],
+			[339, 135],
+			[652, 316]
+		]
+	},
+	"stuff": {
+		"url": "stuff.png",
+		"width": 1002,
+		"height": 568,
+		"textSize": 28,
+		"textAreas": [[20, 385]]
+	}
 }
