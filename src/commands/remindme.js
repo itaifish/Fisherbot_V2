@@ -32,7 +32,7 @@ module.exports = {
                                     x Minutes, Minute, Mins, Min, M, minutes, minute, mins, min, m
                                     x Hours, Hour, Hrs, Hr, H, hours, hour, hrs, hr, h
                                     x Days, Day, days, day `;
-                        bot.sendOutput(message.channel, details, true);
+                        bot.sendOutput(message.channel, details);
                         return;
                     }
                     else {
