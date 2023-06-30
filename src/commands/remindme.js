@@ -50,7 +50,7 @@ module.exports = {
                     output += `Note: Unable to parse the '${evaluation.unparsedString}' part of the input\n`;
                 }
                 output += "Setting a timer for " + msToTime(evaluation.evaluatedMs);
-                setTimeout(() => bot.reply(message, args[1]), evaluation.evaluatedMs);
+                Utility.runInFuture(() => bot.reply(message, args[1]), evaluation.evaluatedMs);
                 bot.sendOutput(message.channel, output);
             },
         },

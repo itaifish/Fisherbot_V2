@@ -29,7 +29,7 @@ module.exports = {
                             bot.sendOutput(message.channel, `I am unable to understand ${args[2]} as a time, or it is 0. Please enter a valid time longer than 0 seconds.`);
                             return;
                         }
-                        setTimeout(() => bot.sendOutput(userFound, args[1]), evaluation.evaluatedMs);
+                        Utility.runInFuture(() => bot.sendOutput(userFound, args[1]), evaluation.evaluatedMs);
                     }
                 }
                 else {
@@ -49,14 +49,12 @@ module.exports = {
                                 bot.sendOutput(message.channel, `I am unable to understand ${args[2]} as a time, or it is 0. Please enter a valid time longer than 0 seconds.`);
                                 return;
                             }
-                            setTimeout(() => bot.sendOutput(userFindTryTwo, args[1]), evaluation.evaluatedMs);
+                            Utility.runInFuture(() => bot.sendOutput(userFindTryTwo, args[1]), evaluation.evaluatedMs);
                         }
                     }
                     else {
                         bot.sendOutput(message.channel, `Could not find user ${userName}`);
                     }
-
-
                 }
             },
         },

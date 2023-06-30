@@ -34,6 +34,31 @@ class Utility {
             unparsedString: timeToParse.trim(),
         };
     }
+
+    /**
+     * Utility function to handle running a callback more than (2^31 - 1)ms in the future.
+     *
+     * @param {() => void} cb The callback to run.
+     * @param {number} ms How long in the future to run this callback. If this is larger than
+     * MAX_SAFE_INTEGER, the callback will be run immediately.
+     */
+    static runInFuture(cb, ms) {
+        const MAXIMUM_SETTIMEOUT_LENGTH = 0x7FFFFFFF;
+
+        // TODO: If we need to set a timeout 285,616 years in the future, handle this.
+        if (ms > Number.MAX_SAFE_INTEGER) {
+            cb();
+        }
+
+        if (ms <= MAXIMUM_SETTIMEOUT_LENGTH) {
+            setTimeout(cb, ms);
+        } else {
+            setTimeout(
+                () => this.runInFuture(cb, ms - MAXIMUM_SETTIMEOUT_LENGTH),
+                MAXIMUM_SETTIMEOUT_LENGTH
+            );
+        }
+    }
 }
 
 module.exports = Utility;
