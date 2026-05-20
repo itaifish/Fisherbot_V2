@@ -9,7 +9,7 @@
     "discord.js": "^12.5.1",
     "ffmpeg-static": "^4.2.7",
     "libsodium-wrappers": "^0.7.8",
-    "pm2": "^6.0.14"
+    "pm2": "^7.0.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0"
